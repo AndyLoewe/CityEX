@@ -8,6 +8,16 @@
 # Copyright:   (c) Andreas Loewe 2014
 # Licence:     <GNU - Free use>
 #-------------------------------------------------------------------------------
+import os, sys
+from PyQt4.QtCore import *
+from PyQt4.QtGui import *
+import json
+from scipy import ndimage
+import gdal
+import osr
+
+
+
 dirname, filename = os.path.split(os.path.abspath(__file__))        # get the Name of the folder the file is currently in
 
 os.chdir(os.path.join(dirname, "gui"))
@@ -80,7 +90,6 @@ class CityEX(QWidget, Ui_CityEX):
         self.handel_start()
 
 
-# ----- Connects with combobox ---------------------------------##
         self.connect(self.comboBox_tab1_input, SIGNAL("currentIndexChanged(int)"), self.handel_inputs)
         self.connect(self.comboBox_tab1_support, SIGNAL("currentIndexChanged(int)"), self.handel_support)
         self.connect(self.comboBox_tab1_ir,SIGNAL("activated(int)"), self.get_band_value_ir)
