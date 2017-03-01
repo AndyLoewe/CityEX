@@ -8,22 +8,6 @@
 # Copyright:   (c) Andreas Loewe 2014
 # Licence:     <GNU - Free use>
 #-------------------------------------------------------------------------------
-import os, sys
-from PyQt4.QtCore import *
-from PyQt4.QtCore import (QString, Qt)
-from PyQt4.QtGui import *
-#from PyQt4.QtGui import (QFont, QPalette)
-#from PyQt4.QtSql import (QSqlDatabase, QSqlQuery, QSqlRelation,\
-  #   QSqlRelationalDelegate, QSqlRelationalTableModel,QSqlTableModel)
-import json
-from scipy import ndimage
-#import numpy as np
-import gdal
-import osr
-#import osgeo
-#from osgeo import gdal_array
-
-
 dirname, filename = os.path.split(os.path.abspath(__file__))        # get the Name of the folder the file is currently in
 
 os.chdir(os.path.join(dirname, "gui"))
@@ -96,7 +80,7 @@ class CityEX(QWidget, Ui_CityEX):
         self.handel_start()
 
 
-# ----- Connects with comboboxs ---------------------------------##
+# ----- Connects with combobox ---------------------------------##
         self.connect(self.comboBox_tab1_input, SIGNAL("currentIndexChanged(int)"), self.handel_inputs)
         self.connect(self.comboBox_tab1_support, SIGNAL("currentIndexChanged(int)"), self.handel_support)
         self.connect(self.comboBox_tab1_ir,SIGNAL("activated(int)"), self.get_band_value_ir)
@@ -267,7 +251,6 @@ class CityEX(QWidget, Ui_CityEX):
             for i in range(self.comboBox_tab1_red.count()):
                 self.comboBox_tab1_ir.removeItem(0)
 
-
         if value == 3:
             self.lineEdit_tab1_support.setPlaceholderText("Insert the path for your image!")
             self.lineEdit_tab1_support.setEnabled(True)
@@ -280,7 +263,6 @@ class CityEX(QWidget, Ui_CityEX):
             self.support_value = 3
             for i in range(self.comboBox_tab1_red.count()):
                 self.comboBox_tab1_ir.removeItem(0)
-
 
     def pushButton_input_dem(self):
         self.infile_dem = QFileDialog().getOpenFileName(self,'Open', r"" + dirname, 'Any file (*.*)' '\n' 'TIF (*.tif)' '\n' 'Erdas (*.img)' )
@@ -380,7 +362,6 @@ class CityEX(QWidget, Ui_CityEX):
         self.comboboxes_for_input()
         #self.read_table_knwlgd()
 
-
     def comboboxes_for_input(self):
         font = QFont("Segoe UI", 12)
         self.comboBox_data = QComboBox()
@@ -417,7 +398,6 @@ class CityEX(QWidget, Ui_CityEX):
         self.tableWidget_tab2_knowlegde.setCellWidget(self.cur_row, 0, self.comboBox_data)
         self.tableWidget_tab2_knowlegde.setCellWidget(self.cur_row, 1, self.comboBox_opp)
 
-
     def row_delete(self):
         try:
             if self.rowRemove < self.tableWidget_tab2_knowlegde.rowCount() and not self.rowRemove == -999:
@@ -431,14 +411,11 @@ class CityEX(QWidget, Ui_CityEX):
         self.rowRemove = -999
         #self.read_table_knwlgd()
 
-
     def returnRowForRemove(self, rowRemove, colRemove):
         self.rowRemove = rowRemove
 
-
     def handel_filter_settings(self, v):
         self.handel_filter_checked(42)
-
 
     def handel_filter_checked(self, v):
         self.validat_inputs()
@@ -454,8 +431,6 @@ class CityEX(QWidget, Ui_CityEX):
             else:
                 value_spin[0].setEnabled(False)
                 value_spin[1].setEnabled(False)
-
-
 
     def read_table_knwlgd(self, a,n):
         self.mathobj = Internal_Math()
@@ -671,14 +646,13 @@ class CityEX(QWidget, Ui_CityEX):
                 and self.lineEdit_tab1_input_dem.text() != self.no_data_msg and self.lineEdit_tab1_input_dem.text() != "" :
                     self.pushButton_global_ok.setEnabled(True)
 
-
             elif self.checkBox_tab1_buildings.isChecked() and self.checkBox_tab1_ndem.isChecked():
                 # if ndem and buildings are checked
                 if len(self.table_item_lst) !=  0 and self.lineEdit_tab1_input_dom.text() != self.no_data_msg and self.lineEdit_tab1_input_dom.text() != ""\
                 and self.lineEdit_tab1_input_dem.text() != self.no_data_msg and self.lineEdit_tab1_input_dem.text() != "" :
                     self.pushButton_global_ok.setEnabled(True)
 
-            elif  self.checkBox_tab1_trees.isChecked() and self.checkBox_tab1_ndem.isChecked():
+            elif self.checkBox_tab1_trees.isChecked() and self.checkBox_tab1_ndem.isChecked():
                 # if ndem and trees are checked
                 if len(self.table_green_item_lst) != 0 and self.lineEdit_tab1_input_dom.text() != self.no_data_msg and self.lineEdit_tab1_input_dom.text() != ""\
                 and self.lineEdit_tab1_input_dem.text() != self.no_data_msg and self.lineEdit_tab1_input_dem.text() != "" :
@@ -757,7 +731,6 @@ class CityEX(QWidget, Ui_CityEX):
                 and self.lineEdit_tab1_support.text() != self.no_data_msg and self.lineEdit_tab1_support.text() !="":
                     self.pushButton_global_ok.setEnabled(True)
 
-
     def ok_event(self):
         ### create the names to find all the values
         self.name_creater()
@@ -777,8 +750,6 @@ class CityEX(QWidget, Ui_CityEX):
                 self.classification = Reclassification(str(self.outfile_filtered), str(self.outfile_classiefied)).Reclassify()
 
                 self.raster2poly = Raster_2_Poly(self.outfile_classiefied, str(self.outfile))
-
-
 
             elif self.input_value == 1 and self.support_value == 1:
                 self.ndvi = NDVI(str(self.infile_support), str(self.outfile_support), int(self.comboBox_tab1_red.currentIndex()), int(self.comboBox_tab1_ir.currentIndex())).calc_ndvi() ## fehlen tut noch die variablen fuer die baender
@@ -811,7 +782,6 @@ class CityEX(QWidget, Ui_CityEX):
                 self.classification = Reclassification(str(self.outfile_filtered), str(self.outfile_classiefied)).Reclassify()
 
                 self.raster2poly = Raster_2_Poly(self.outfile_classiefied,str(self.outfile))
-
 
             elif self.input_value == 2 and self.support_value == 0:
                 self.ndem_model = NDEM(str(self.infile_dem), str(self.infile_dom),str(self.outfile_ndem), int(self.spinBox_tab1_nodata.value()))
@@ -847,7 +817,6 @@ class CityEX(QWidget, Ui_CityEX):
                 ndem_check_value = 1
 
 
-
             elif self.input_value == 2 and self.support_value == 1:
                 self.ndvi = NDVI(str(self.infile_support), str(self.outfile_support), int(self.comboBox_tab1_red.currentIndex()), int(self.comboBox_tab1_ir.currentIndex())).calc_ndvi() ## fehlen tut noch die variablen fuer die baender
                 message = self.ndvi[1]
@@ -869,8 +838,6 @@ class CityEX(QWidget, Ui_CityEX):
                 ndem_check_value = 1
                 ndvi_check_value = 1
                 self.comboBox_tab1_ir.currentIndex()
-
-
 
         if self.checkBox_tab1_trees.isChecked():
             if self.input_value == 1 and self.support_value == 0:
@@ -918,8 +885,6 @@ class CityEX(QWidget, Ui_CityEX):
                     self.lineEdit_global_error.setText(message)
                     self.local_max = Tree_Top_Detection(str(self.outfile_knwlgd_green), int(self.spinBox_tab3_windowsize.value()), int(self.spinBox_tab3_nodata_allowed.value()), float(self.doubleSpinBox_tab3_cri_value.value()))
 
-
-
             elif self.input_value == 2 and self.support_value == 1:
                 if ndem_check_value == 1:
                     self.green_knwlg = Green_Knowledge_Engineering(str(self.outfile_ndem), str(self.outfile_knwlgd_green), self.table_green_item_lst, \
@@ -940,8 +905,6 @@ class CityEX(QWidget, Ui_CityEX):
 
                     self.local_max = Tree_Top_Detection(str(self.outfile_knwlgd_green), int(self.spinBox_tab3_windowsize.value()), int(self.spinBox_tab3_nodata_allowed.value()), float(self.doubleSpinBox_tab3_cri_value.value()))
 
-
-
             elif self.input_value == 2 and (self.support_value == 2 or self.support_value ==3):
                 if ndem_check_value == 1:
                     self.green_knwlg = Green_Knowledge_Engineering(str(self.outfile_ndem), str(self.outfile_knwlgd_green), self.table_green_item_lst,str(self.outfile_support),\
@@ -957,14 +920,6 @@ class CityEX(QWidget, Ui_CityEX):
                     message  = self.green_knwlg[1]
                     self.lineEdit_global_error.setText(message)
                     self.local_max = Tree_Top_Detection(str(self.outfile_knwlgd_green), int(self.spinBox_tab3_windowsize.value()), int(self.spinBox_tab3_nodata_allowed.value()), float(self.doubleSpinBox_tab3_cri_value.value()))
-
-
-
-
-
-
-
-
 
 # ----- will run the program -------------------###
 if __name__ == '__main__':
