@@ -22,7 +22,7 @@ class Internal_Math():
 
 
     def _minus_(self, a, b):
-        self.value = a -b
+        self.value = a - b
         return self.value
 
 
