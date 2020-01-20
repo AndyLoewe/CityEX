@@ -12,7 +12,7 @@
 class Internal_Math():
     def __init__(self):
         """This class provids tools to easiely access the mathematical opperations
-            needed for the thesis"""
+            needed for the thesis, which in hinsight could have been solved more eaily..."""
         pass
 
 
