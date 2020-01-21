@@ -5,8 +5,6 @@ functions and algorithems desinged for this thesis are combined into one handy P
 
 # Packages you need
 The programm rely on the following packages:
-- os
-- sys
 - PyQt4
 - json
 - scipy with ndimage
